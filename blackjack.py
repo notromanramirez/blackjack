@@ -1,6 +1,8 @@
 # Roman Ramirez
 # rr8rk@virginia.edu
 
+# window size at 70+ by 8
+
 ### CLASS IMPORTS ###
 
 from card import Card
@@ -57,7 +59,7 @@ def main():
 		# Player's Turn
 		response = ""
 		# while the player is continuing his turn
-		while (hand.total() <= 21) and ((response != Hand.STAND) and (response != Hand.HOLD)):
+		while (hand.total() <= 21) and ((response != Hand.STAND) and (response != Hand.HOLD) and (response != Hand.FOLD)):
 			
 			# display the current board
 			print('')
@@ -71,7 +73,7 @@ def main():
 			while response not in hand.actionsList():
 				response = input("What would you like to do?\n")
 				if response not in hand.actionsList():
-					print("not valid")
+					print("Please enter a valid response!\n")
 
 			# code for the hit action
 			if response == Hand.HIT:
@@ -93,7 +95,9 @@ def main():
 		houseVal = house.total()
 
 		# result checking
-		if (len(hand) == 2) and (Card.TEN not in [c.suit for c in hand]) and (hand.total() == 21):
+		if response == Hand.FOLD:
+			credits -= wager // 2
+		elif (len(hand) == 2) and (Card.TEN not in [c.suit for c in hand]) and (hand.total() == 21):
 			credits += wager * 2
 			print("BlackJack!")
 		elif playerVal > 21:
